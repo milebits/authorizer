@@ -21,8 +21,11 @@ class Role extends Model
         return $this->belongsToMany(Permission::class)->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function users()
     {
-        return $this->belongsToMany(config('authorizer.pivots.user_class', 'App\Models\User'))->withTimestamps();
+        return $this->belongsToMany(config('authoriser.pivots.user_class', 'App\Models\User'))->withTimestamps();
     }
 }
