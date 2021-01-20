@@ -4,8 +4,8 @@
     "type": "library",
     "require": {
         "php": ">=7.1",
-        "laravel/framework": "^8.23",
-        "milebits/eloquent-filters": "^1.0"
+        "laravel/framework": "^6|^7|^8",
+        "milebits/eloquent-filters": "^1"
     },
     "license": "GPL-3.0-or-later",
     "authors": [
