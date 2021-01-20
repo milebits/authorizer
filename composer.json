@@ -1,0 +1,40 @@
+{
+    "name": "milebits/authorizer",
+    "description": "Permission handling for Laravel 6.0 and up",
+    "type": "library",
+    "require": {
+        "php": ">=8.0",
+        "laravel/framework": "^8.23",
+        "milebits/eloquent-filters": "^1.0"
+    },
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Hicham SADDEK",
+            "email": "h.saddek@serrahub.com",
+            "homepage": "https://linkedin.com/in/hicham-saddek",
+            "role": "Lead Developer"
+        },
+        {
+            "name": "Milebits Systems",
+            "email": "support@milebits.com",
+            "homepage": "https://os.milebits.com",
+            "role": "Project Manager"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "files": [],
+        "psr-4": {
+            "Milebits\\Authorizer\\": "src/",
+            "Milebits\\Authoriser\\Database\\": "database/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Milebits\\Authorizer\\Providers\\LaraFiltersServiceProvider"
+            ]
+        }
+    }
+}
