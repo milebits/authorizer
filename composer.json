@@ -34,7 +34,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Milebits\\Authorizer\\Providers\\LaraFiltersServiceProvider"
+                "Milebits\\Authorizer\\Providers\\AuthorizerServiceProvider"
             ]
         }
     }
