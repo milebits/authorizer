@@ -5,6 +5,7 @@ namespace Milebits\Authoriser\Database\seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Milebits\Authorizer\Models\Permission;
+use function Milebits\Authorizer\Helpers\app_models;
 
 class PermissionSeeder extends Seeder
 {
