@@ -25,7 +25,7 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "autoload": {
-        "files": [],
+        "files": ['src/Helpers/functions.php'],
         "psr-4": {
             "Milebits\\Authorizer\\": "src/",
             "Milebits\\Authoriser\\Database\\": "database/"
