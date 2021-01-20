@@ -16,7 +16,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        app_models()->each(function ($model) {
+        app_models()->each(function ($model, $index) {
             collect(['viewAny' => "View any", 'view' => "View", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete"])
                 ->each(function ($name, $verb) use ($model) {
                     $model = Str::of(class_basename($model))->singular()->snake()->lower();
