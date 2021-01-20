@@ -22,6 +22,7 @@
             "role": "Project Manager"
         }
     ],
+    "prefer-stable": true,
     "minimum-stability": "dev",
     "autoload": {
         "files": [],
