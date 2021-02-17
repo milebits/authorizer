@@ -1,6 +1,6 @@
 {
     "name": "milebits/authorizer",
-    "description": "Permission handling for Laravel 6.0 and up",
+    "description": "Permission handling for Laravel 6.0 and higher",
     "type": "library",
     "require": {
         "php": ">=7.1",
