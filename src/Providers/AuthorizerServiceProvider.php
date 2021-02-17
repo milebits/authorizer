@@ -14,6 +14,6 @@ class AuthorizerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-        $this->mergeConfigFrom(__DIR__ . '/../../config/authoriser.php', 'authoriser');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/authorizer.php', 'authoriser');
     }
 }
