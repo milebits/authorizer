@@ -3,12 +3,13 @@
 namespace Milebits\Authorizer\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use ReflectionClass;
 
 if (!function_exists('get_class_from_file')) {
-    function get_class_from_file($filepath)
+    function get_class_from_file($filepath): string
     {
         // this assumes you're following PSR-4 standards, although you may
         // still need to modify based on how you're structuring your app/namespaces
@@ -21,7 +22,7 @@ if (!function_exists('get_class_from_file')) {
 }
 
 if (!function_exists('app_models')) {
-    function app_models($path = null, $base_model = null, bool $with_abstract = false)
+    function app_models($path = null, $base_model = null, bool $with_abstract = false): Collection
     {
         $disk = Storage::disk('app');
         if (is_null($path) && $disk->exists('Models')) $path = "Models";
