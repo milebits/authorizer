@@ -17,10 +17,10 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         app_models()->each(function ($model, $index) {
-            collect(['viewAny' => "View any", 'view' => "View", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete"])
+            collect(['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete"])
                 ->each(function ($name, $verb) use ($model) {
-                    $model = Str::of(class_basename($model))->singular()->snake()->lower();
-                    Permission::create(["slug" => "$verb.$model", "enabled" => true, 'name' => "$name $model"]);
+                    $modelName = Str::of(class_basename($model))->singular()->snake()->lower();
+                    Permission::create(["class" => $model, "action" => $verb, "enabled" => true, 'name' => "$name $modelName"]);
                 });
         });
     }
