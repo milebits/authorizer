@@ -16,7 +16,7 @@ class Role extends Model
     /**
      * @return BelongsToMany
      */
-    public function permissions()
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class)->withTimestamps();
     }
@@ -24,8 +24,9 @@ class Role extends Model
     /**
      * @return BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(config('authorizer.pivots.user_class', 'App\Models\User') ?? 'App\Models\User')->withTimestamps();
+        $relation = config('authorizer.pivots.user_class', 'App\Models\User');
+        return $this->belongsToMany(is_null($relation) ? 'App\Models\User' : $relation)->withTimestamps();
     }
 }
