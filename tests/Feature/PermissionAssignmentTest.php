@@ -2,9 +2,9 @@
 
 namespace Milebits\Authoriser\Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Milebits\Authoriser\Tests\Models\User;
 use Milebits\Authoriser\Tests\TestCase;
 use Milebits\Authorizer\Models\Permission;
 use Milebits\Authorizer\Models\Role;
