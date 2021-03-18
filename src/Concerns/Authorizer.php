@@ -6,6 +6,9 @@ namespace Milebits\Authorizer\Concerns;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use Milebits\Authorizer\Models\Permission;
 use Milebits\Authorizer\Models\Role;
 
 /**
@@ -54,11 +57,11 @@ trait Authorizer
     }
 
     /**
-     * @param string|Model $class
+     * @param Model|array|string $class
      * @param string|null $action
      * @return bool
      */
-    public function hasPermission(string|Model $class, string $action = null): bool
+    public function hasPermission(Model|array|string $class, string $action = null): bool
     {
         return $this->roles()->whereHas('permissions', function (Builder $permission) use ($class, $action) {
             if (is_array($class))
@@ -68,5 +71,24 @@ trait Authorizer
             if (!is_string($class) || !is_string($action)) return null;
             return $permission->action($action)->class($class);
         })->exists();
+    }
+
+    /**
+     * @param Collection|array $permissions
+     * @param bool $shouldHaveAll
+     * @return bool
+     */
+    public function hasPermissions(Collection|array $permissions, bool $shouldHaveAll = false): bool
+    {
+        $permissions = $permissions->transform(function ($permission) {
+            if (is_int($permission)) $permission = Permission::find($permission);
+            if ($permission instanceof Permission) return [$permission->{$permission->getClassColumn()}, $permission->{$permission->getActionColumn()}];
+            if (is_array($permission)) return $permission;
+            if (is_string($permission)) return Str::of($permission)->explode('.');
+            return null;
+        });
+        $count = $permissions->count();
+        $countFound = $permissions->reject(fn(array $permission) => !$this->hasPermission($permission))->count();
+        return $shouldHaveAll ? $count == $countFound : $countFound > 0;
     }
 }
