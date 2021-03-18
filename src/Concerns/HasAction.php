@@ -33,12 +33,9 @@ trait HasAction
      */
     public function scopeAction(Builder $builder, string $action): Builder
     {
-        return $builder->where(
-            count((array)(property_exists($builder, 'joins') ? $builder->joins : [])) > 0
-                ? $this->getQualifiedActionColumn()
-                : $this->getActionColumn(),
-            $action
-        );
+        if ($action === '*')
+            return $builder->where($this->decideActionColumnName($builder), 'like', '%%');
+        return $builder->where($this->decideActionColumnName($builder), $action);
     }
 
     /**
@@ -47,5 +44,16 @@ trait HasAction
     public function getQualifiedActionColumn(): string
     {
         return $this->qualifyColumn($this->getActionColumn());
+    }
+
+    /**
+     * @param Builder $builder
+     * @return string
+     */
+    public function decideActionColumnName(Builder $builder): string
+    {
+        return count((array)(property_exists($builder, 'joins') ? $builder->joins : [])) > 0
+            ? $this->getQualifiedActionColumn()
+            : $this->getActionColumn();
     }
 }
