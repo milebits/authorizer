@@ -3,6 +3,7 @@
 
 namespace Milebits\Authorizer\Concerns;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -80,15 +81,17 @@ trait Authorizer
      */
     public function hasPermissions(Collection|array $permissions, bool $shouldHaveAll = false): bool
     {
+        if (is_array($permissions)) $permissions = collect($permissions);
         $permissions = $permissions->transform(function ($permission) {
             if (is_int($permission)) $permission = Permission::find($permission);
+            if ($permission instanceof Arrayable) $permission = $permission->toArray();
             if ($permission instanceof Permission) return [$permission->{$permission->getClassColumn()}, $permission->{$permission->getActionColumn()}];
             if (is_array($permission)) return $permission;
             if (is_string($permission)) return Str::of($permission)->explode('.');
             return null;
         });
         $count = $permissions->count();
-        $countFound = $permissions->reject(fn(array $permission) => !$this->hasPermission($permission))->count();
+        $countFound = $permissions->whereNotNull()->reject(fn(array $permission) => !$this->hasPermission($permission))->count();
         return $shouldHaveAll ? $count == $countFound : $countFound > 0;
     }
 }
