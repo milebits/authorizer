@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Milebits\Authorizer\Concerns\HasAction;
 use Milebits\Authorizer\Concerns\HasClass;
+use Milebits\Eloquent\Filters\Concerns\Enableable;
 use Milebits\Eloquent\Filters\Concerns\Nameable;
 
 class Permission extends Model
 {
-    use SoftDeletes, HasFactory, Nameable, HasAction, HasClass;
+    use SoftDeletes, HasFactory, Nameable, HasAction, HasClass, Enableable;
 
     /**
      * @return BelongsToMany
