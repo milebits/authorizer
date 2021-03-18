@@ -27,6 +27,11 @@ trait HasClass
         return constVal($this, 'CLASS_COLUMN', 'class');
     }
 
+    /**
+     * @param Builder $builder
+     * @param string $class
+     * @return Builder
+     */
     public function scopeClass(Builder $builder, string $class): Builder
     {
         if ($class == '*')
