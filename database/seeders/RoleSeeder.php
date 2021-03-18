@@ -1,6 +1,6 @@
 <?php
 
-namespace Milebits\Authoriser\Database\seeders;
+namespace Milebits\Authorizer\Database\seeders;
 
 use Illuminate\Database\Seeder;
 use Milebits\Authorizer\Models\Role;
