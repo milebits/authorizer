@@ -34,7 +34,7 @@ trait HasAction
     public function scopeAction(Builder $builder, string $action): Builder
     {
         if ($action === '*')
-            return $builder->where($this->decideActionColumnName($builder), 'like', '%%');
+            return $builder;
         return $builder->where($this->decideActionColumnName($builder), $action);
     }
 
