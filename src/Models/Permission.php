@@ -2,6 +2,8 @@
 
 namespace Milebits\Authorizer\Models;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -25,13 +27,23 @@ class Permission extends Model
     }
 
     /**
-     * @param string $class
+     * @param string|array|Arrayable $class
      * @param string|null $action
-     * @return Permission|null
+     * @param bool $getCollection
+     * @param bool|null $pluck
+     * @return array|Collection
      */
-    public static function findByClassAction(string $class, string $action = null): ?Permission
+    public static function getByClassAction(string|array|Arrayable $class = '*', ?string $action = null, bool $getCollection = false, bool $pluck = null): array|Collection
     {
-        if (is_null($action) && Str::of($class)->contains('.')) [$class, $action] = Str::of($class)->explode('.');
-        return self::action($action)->class($class)->first();
+        if (is_string($class) && Str::of($class)->contains('.')) $class = Str::of($class)->explode('.');
+        if ($class instanceof Arrayable) $class = $class->toArray();
+        if (is_array($class)) return self::getByClassAction(
+            $class[0] ?? $class['class'] ?? '*',
+            $class[1] ?? $class['action'] ?? '*',
+            $getCollection
+        );
+        $permissions = Permission::action($action)->class($class)->get();
+        if (!is_null($pluck)) $permissions = $permissions->pluck($pluck);
+        return $getCollection ? $permissions : $permissions->toArray();
     }
 }
