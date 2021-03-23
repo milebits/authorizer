@@ -35,7 +35,7 @@ $user= App\Models\User::find(1);
 
 $user->roles();
 ```
-
+**This IS an Eloquent relationship**
 #### User permissions
 
 ```php
@@ -43,9 +43,7 @@ $user= App\Models\User::find(1);
 
 $user->permissions();
 ```
-
-Or you can also use the `getByClassAction` method of the `Milebits\Authorizer\Models\Permission` model.
-**THIS IS NOT AN ELOQUENT RELATIONSHIP**
+**THIS IS NOT an Eloquent relationship**
 
 #### Getting permissions
 
