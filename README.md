@@ -22,6 +22,19 @@ class User extends Model{
 }
 ```
 
+### Installing the permissions
+
+Once you are satisfied with the actual models that you have in your application, you can run
+the ```artisan authorizer:permInstall``` command in order to generate permissions for every Model that exists in your
+applicationModels folder.
+
+```bash
+php artisan authorizer:permInstall
+```
+
+_**CAUTION: this command should be used only ONCE, and it is highly advised to run it after a fresh migration not
+after**_
+
 And that's it, you are done! you can now use this package
 
 ## How to use it
@@ -37,25 +50,24 @@ $user->roles();
 ```
 **This IS an Eloquent relationship**
 #### User permissions
-
 ```php
 $user= App\Models\User::find(1);
 
 $user->permissions();
 ```
 **THIS IS NOT an Eloquent relationship**
-
 #### Getting permissions
-
 ##### getByClassAction
-
 ```php
 use App\Models\User;
 use Milebits\Authorizer\Models\Permission;
 
 $permissions = Permission::getByClassAction(class: User::class, action: 'viewAny', getCollection: true);
+
 $permissions = Permission::getByClassAction(['class' => User::class, 'action'=> 'viewAny'], getCollection: true);
+
 $permissions = Permission::getByClassAction([User::class, 'viewAny'], getCollection: true);
+
 $permissions = Permission::getByClassAction('App\Models\User.viewAny', getCollection: true);
 ```
 
@@ -110,8 +122,11 @@ use App\Models\User;use Milebits\Authorizer\Models\Permission;
 $user = User::find(1);
 
 $canViewAnyUser = $user->hasPermission('App\Models\User.viewAny');
+
 $canViewAnyUser = $user->hasPermission(class: User::class,action: 'viewAny');
+
 $canViewAnyUser = $user->hasPermission([User::class, 'viewAny']);
+
 $canViewAnyUser = $user->hasPermission([
     'class' => User::class,
     'action' => 'viewAny',
@@ -119,6 +134,7 @@ $canViewAnyUser = $user->hasPermission([
 
 // Or you can do it using the hasPermissions instead of hasPermission
 $canViewOrUpdateUser = $user->hasPermissions([1, 2, 3]);
+
 $canViewOrUpdateUser = $user->hasPermissions([
     ...Permission::getByClassAction(action: 'view', pluck: 'id'),
     ...Permission::getByClassAction(action: 'update', pluck: 'id'),
