@@ -3,11 +3,11 @@
 namespace Milebits\Authorizer\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Milebits\Authorizer\Concerns\HasAction;
 use Milebits\Authorizer\Concerns\HasClass;
@@ -30,10 +30,10 @@ class Permission extends Model
      * @param string|array|Arrayable $class
      * @param string|null $action
      * @param bool $getCollection
-     * @param bool|null $pluck
+     * @param string|null $pluck
      * @return array|Collection
      */
-    public static function getByClassAction(string|array|Arrayable $class = '*', ?string $action = null, bool $getCollection = false, bool $pluck = null): array|Collection
+    public static function getByClassAction(string|array|Arrayable $class = '*', ?string $action = null, bool $getCollection = false, string $pluck = null): array|Collection
     {
         if (is_string($class) && Str::of($class)->contains('.')) $class = Str::of($class)->explode('.');
         if ($class instanceof Arrayable) $class = $class->toArray();
