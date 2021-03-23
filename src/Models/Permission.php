@@ -30,10 +30,10 @@ class Permission extends Model
      * @param string|array|Arrayable $class
      * @param string|null $action
      * @param bool $getCollection
-     * @param string|null $pluck
+     * @param string|bool $pluck
      * @return array|Collection
      */
-    public static function getByClassAction(string|array|Arrayable $class = '*', ?string $action = null, bool $getCollection = false, string $pluck = null): array|Collection
+    public static function getByClassAction(string|array|Arrayable $class = '*', ?string $action = '*', bool $getCollection = false, string|bool $pluck = true): array|Collection
     {
         if (is_string($class) && Str::of($class)->contains('.')) $class = Str::of($class)->explode('.');
         if ($class instanceof Arrayable) $class = $class->toArray();
@@ -42,8 +42,10 @@ class Permission extends Model
             $class[1] ?? $class['action'] ?? '*',
             $getCollection
         );
-        $permissions = Permission::action($action)->class($class)->get();
-        if (!is_null($pluck)) $permissions = $permissions->pluck($pluck);
+        $builder = Permission::action($action)->class($class);
+        if (is_bool($pluck) && $pluck) $permissions = $builder->pluck('id');
+        else if (is_string($pluck) && Str::of($pluck)->isNotEmpty()) $permissions = $builder->pluck($pluck);
+        else $permissions = $builder->get();
         return $getCollection ? $permissions : $permissions->toArray();
     }
 }
