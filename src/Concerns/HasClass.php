@@ -34,8 +34,7 @@ trait HasClass
      */
     public function scopeClass(Builder $builder, string $class): Builder
     {
-        if ($class == '*')
-            return $builder;
+        if ($class == '*') return $builder;
         return $builder->where($this->decideClassColumnName($builder), $class);
     }
 
