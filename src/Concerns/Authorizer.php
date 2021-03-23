@@ -38,6 +38,16 @@ trait Authorizer
     }
 
     /**
+     * @return Collection
+     */
+    public function permissions(): Collection
+    {
+        return Permission::roles()->whereHas('users', function (Role $role) {
+            return $role->users()->whereKey($this->getKey());
+        })->get();
+    }
+
+    /**
      * @param Role|int|array $role
      * @return int
      */
@@ -65,10 +75,9 @@ trait Authorizer
     public function hasPermission(Model|array|string $class, string $action = null): bool
     {
         return $this->roles()->whereHas('permissions', function (Builder $permission) use ($class, $action) {
-            if (is_array($class))
-                [$class, $action] = $class;
-            if ($class instanceof Model && is_null($action))
-                return $permission->whereKey($class->getKey());
+            if (is_string($class) && Str::contains($class, '.')) [$class, $action] = Str::of($class)->explode('.');
+            if (is_array($class)) [$class, $action] = $class;
+            if ($class instanceof Model && is_null($action)) return $permission->whereKey($class->getKey());
             if (!is_string($class) || !is_string($action)) return null;
             return $permission->action($action)->class($class);
         })->exists();
