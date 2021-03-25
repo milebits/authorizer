@@ -20,7 +20,12 @@ class PermissionSeeder extends Seeder
             collect(['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete"])
                 ->each(function ($name, $verb) use ($model) {
                     $modelName = Str::of(class_basename($model))->singular()->snake()->lower();
-                    Permission::create(["class" => $model, "action" => $verb, "enabled" => true, 'name' => "$name $modelName"]);
+                    Permission::create([
+                        "name" => "$name $modelName",
+                        "class" => ltrim(rtrim($model, '\\'), '\\'),
+                        "action" => $verb,
+                        "enabled" => true,
+                    ]);
                 });
         });
     }
