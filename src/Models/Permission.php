@@ -11,8 +11,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Milebits\Authorizer\Concerns\HasAction;
 use Milebits\Authorizer\Concerns\HasClass;
-use Milebits\Eloquent\Filters\Concerns\Enableable;
-use Milebits\Eloquent\Filters\Concerns\Nameable;
+use Milebits\Eloquent\Filters\Concerns\EnableField;
+use Milebits\Eloquent\Filters\Concerns\NameField;
 
 class Permission extends Model
 {
