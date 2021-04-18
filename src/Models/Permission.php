@@ -16,7 +16,7 @@ use Milebits\Eloquent\Filters\Concerns\Nameable;
 
 class Permission extends Model
 {
-    use SoftDeletes, HasFactory, Nameable, HasAction, HasClass, Enableable;
+    use SoftDeletes, HasFactory, NameField, HasAction, HasClass, EnableField;
 
     /**
      * @return BelongsToMany
