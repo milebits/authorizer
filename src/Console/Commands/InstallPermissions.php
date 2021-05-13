@@ -57,6 +57,6 @@ class InstallPermissions extends Command
     #[ArrayShape(['viewAny' => "string", 'view' => "string", "create" => "string", 'update' => "string", 'delete' => "string", 'forceDelete' => "string"])]
     public function getMethods(): array
     {
-        return ['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete"];
+        return ['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete", "restore" => "Restore"];
     }
 }
