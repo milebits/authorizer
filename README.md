@@ -48,14 +48,12 @@ $user= App\Models\User::find(1);
 
 $user->roles();
 ```
-**This IS an Eloquent relationship**
 #### User permissions
 ```php
 $user= App\Models\User::find(1);
 
 $user->permissions();
 ```
-**THIS IS NOT an Eloquent relationship**
 #### Getting permissions
 ##### getByClassAction
 ```php
