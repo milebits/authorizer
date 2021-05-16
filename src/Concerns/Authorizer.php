@@ -4,9 +4,9 @@
 namespace Milebits\Authorizer\Concerns;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Milebits\Authorizer\Models\Permission;
@@ -38,11 +38,13 @@ trait Authorizer
     }
 
     /**
-     * @return HasManyThrough
+     * @return Collection
      */
-    public function permissions(): HasManyThrough
+    public function permissions(): Collection
     {
-        return $this->hasManyThrough(Permission::class, Role::class);
+        return Permission::roles()->whereHas('users', function (Role $role) {
+            return $role->users()->whereKey($this->getKey());
+        })->get();
     }
 
     /**
@@ -72,7 +74,7 @@ trait Authorizer
      */
     public function hasPermission(Model|array|string $class, string $action = null): bool
     {
-        return $this->permissions()->where(function ($permission) use ($class, $action) {
+        return $this->roles()->whereHas('permissions', function (Builder $permission) use ($class, $action) {
             if (is_string($class) && Str::contains($class, '.')) [$class, $action] = Str::of($class)->explode('.');
             if (is_array($class)) [$class, $action] = $class;
             if ($class instanceof Model && is_null($action)) return $permission->whereKey($class->getKey());
