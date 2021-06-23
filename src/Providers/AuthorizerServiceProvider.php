@@ -16,7 +16,8 @@ class AuthorizerServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->mergeConfigFrom(__DIR__ . '/../../config/authorizer.php', 'authoriser');
-        if ($this->app->runningInConsole())
-            $this->commands([InstallPermissions::class]);
+        $this->mergeConfigFrom(__DIR__ . '/../../config/filesystems.php', 'filesystems');
+        if (!$this->app->runningInConsole()) return;
+        $this->commands([InstallPermissions::class]);
     }
 }
