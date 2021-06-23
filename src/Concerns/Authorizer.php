@@ -42,8 +42,10 @@ trait Authorizer
      */
     public function permissions(): Collection
     {
-        return Permission::roles()->whereHas('users', function (Role $role) {
-            return $role->users()->whereKey($this->getKey());
+        return Permission::whereHas('roles', function (Builder $roleBuilder) {
+            return $roleBuilder->whereHas('users', function (Builder $userBuilder) {
+                return $userBuilder->whereKey($this->getKey());
+            });
         })->get();
     }
 
