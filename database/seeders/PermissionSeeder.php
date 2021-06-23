@@ -17,7 +17,7 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         app_models()->each(function ($model, $index) {
-            collect(['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete"])
+            collect(['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete", "restore" => "Restore"])
                 ->each(function ($name, $verb) use ($model) {
                     $modelName = Str::of(class_basename($model))->singular()->snake()->lower();
                     Permission::create([
