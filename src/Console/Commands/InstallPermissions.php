@@ -45,7 +45,7 @@ class InstallPermissions extends Command
         app_models()->each(function ($model, $index) {
             collect($this->getMethods())->each(function ($name, $verb) use ($model) {
                 $modelName = Str::of(class_basename($model))->singular()->snake()->lower();
-                Permission::create(["class" => $model, "action" => $verb, "enabled" => true, 'name' => "$name $modelName"]);
+                Permission::create(["class" => $model, "action" => $verb, "enable" => true, 'name' => "$name $modelName"]);
             });
         });
         return 0;

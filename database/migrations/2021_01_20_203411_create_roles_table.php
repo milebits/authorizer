@@ -12,7 +12,7 @@ class CreateRolesTable extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string('name')->nullable();
-            $table->boolean('enabled')->default(false);
+            $table->boolean('enable')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -14,10 +14,10 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['slug' => 'admin', 'name' => 'Administrator', 'enabled' => true]);
-        Role::create(['slug' => 'moderator', 'name' => 'Moderator', 'enabled' => true]);
-        Role::create(['slug' => 'manager', 'name' => 'Manager', 'enabled' => true]);
-        Role::create(['slug' => 'employee', 'name' => 'Employee', 'enabled' => true]);
-        Role::create(['slug' => 'partner', 'name' => 'Partner', 'enabled' => true]);
+        Role::create(['slug' => 'admin', 'name' => 'Administrator', 'enable' => true]);
+        Role::create(['slug' => 'moderator', 'name' => 'Moderator', 'enable' => true]);
+        Role::create(['slug' => 'manager', 'name' => 'Manager', 'enable' => true]);
+        Role::create(['slug' => 'employee', 'name' => 'Employee', 'enable' => true]);
+        Role::create(['slug' => 'partner', 'name' => 'Partner', 'enable' => true]);
     }
 }

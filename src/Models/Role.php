@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Milebits\Eloquent\Filters\Concerns\Nameable;
-use Milebits\Eloquent\Filters\Concerns\Sluggable;
+use Milebits\Eloquent\Filters\Concerns\NameField;
+use Milebits\Eloquent\Filters\Concerns\SlugField;
+use Milebits\Eloquent\Filters\Filters\NameFilter;
+use Milebits\Eloquent\Filters\Filters\SlugFilter;
 
 class Role extends Model
 {
-    use SoftDeletes, HasFactory, Sluggable, Nameable;
+    use SoftDeletes, HasFactory, SlugField, NameField;
+
+    protected static array $filters = [SlugFilter::class, NameFilter::class];
 
     /**
      * @return BelongsToMany

@@ -24,7 +24,7 @@ class PermissionSeeder extends Seeder
                         "name" => "$name $modelName",
                         "class" => ltrim(rtrim($model, '\\'), '\\'),
                         "action" => $verb,
-                        "enabled" => true,
+                        "enable" => true,
                     ]);
                 });
         });
