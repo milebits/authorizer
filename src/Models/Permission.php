@@ -8,20 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Milebits\Authorizer\Concerns\HasAction;
 use Milebits\Authorizer\Concerns\HasClass;
 use Milebits\Eloquent\Filters\Concerns\EnableField;
-use Milebits\Eloquent\Filters\Concerns\Filterable;
 use Milebits\Eloquent\Filters\Concerns\NameField;
 use Milebits\Eloquent\Filters\Filters\EnableFilter;
 use Milebits\Eloquent\Filters\Filters\NameFilter;
+use Str;
 
 class Permission extends Model
 {
-    use SoftDeletes, HasFactory, NameField, HasAction, HasClass, EnableField, Filterable;
+    use SoftDeletes, HasFactory, NameField, HasAction, HasClass, EnableField;
 
-    protected static array $filters = [EnableFilter::class, NameFilter::class];
+    protected static array $filters = [NameFilter::class, EnableFilter::class];
 
     /**
      * @return BelongsToMany

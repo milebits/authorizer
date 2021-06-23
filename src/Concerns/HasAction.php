@@ -4,12 +4,15 @@ namespace Milebits\Authorizer\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use JetBrains\PhpStorm\Pure;
 use function Milebits\Helpers\Helpers\constVal;
 
 /**
  * Trait HasAction
  * @package Milebits\Authorizer\Concerns
  * @mixin Model
+ * @method static Builder action(string $action)
+ * @method static Builder class(string $class)
  */
 trait HasAction
 {
@@ -21,7 +24,7 @@ trait HasAction
     /**
      * @return string
      */
-    public function getActionColumn(): string
+    #[Pure] public function getActionColumn(): string
     {
         return constVal($this, 'ACTION_COLUMN', 'action');
     }

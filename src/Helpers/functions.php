@@ -14,7 +14,7 @@ if (!function_exists('get_class_from_file')) {
         // this assumes you're following PSR-4 standards, although you may
         // still need to modify based on how you're structuring your app/namespaces
         return (string)Str::of($filepath)
-            ->replace(app_path(), '\App')
+            ->replace(app_path(), 'App')
             ->replaceFirst('app', 'App')
             ->replaceLast('.php', '')
             ->replace('/', '\\');

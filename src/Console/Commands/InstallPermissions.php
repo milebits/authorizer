@@ -42,7 +42,7 @@ class InstallPermissions extends Command
     public function handle(): int
     {
         Permission::all()->each(fn(Permission $permission) => $permission->forceDelete());
-        app_models()->each(function ($model, $index) {
+        app_models()->each(function ($model) {
             collect($this->getMethods())->each(function ($name, $verb) use ($model) {
                 $modelName = Str::of(class_basename($model))->singular()->snake()->lower();
                 Permission::create(["class" => $model, "action" => $verb, "enable" => true, 'name' => "$name $modelName"]);
@@ -54,9 +54,9 @@ class InstallPermissions extends Command
     /**
      * @return string[]
      */
-    #[ArrayShape(['viewAny' => "string", 'view' => "string", "create" => "string", 'update' => "string", 'delete' => "string", 'forceDelete' => "string"])]
+    #[ArrayShape(['viewAny' => "string", 'view' => "string", "create" => "string", 'update' => "string", 'delete' => "string", 'forceDelete' => "string", 'restore' => 'string'])]
     public function getMethods(): array
     {
-        return ['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete"];
+        return ['viewAny' => "View any", 'view' => "View", "create" => "Create", 'update' => "Update", 'delete' => "Delete", 'forceDelete' => "Force delete", "restore" => "Restore"];
     }
 }
