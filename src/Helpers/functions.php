@@ -3,8 +3,8 @@
 namespace Milebits\Authorizer\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use ReflectionClass;
 
@@ -24,11 +24,11 @@ if (!function_exists('get_class_from_file')) {
 if (!function_exists('app_models')) {
     function app_models($path = null, $base_model = null, bool $with_abstract = false): Collection
     {
-        $disk = Storage::disk('app');
-        if (is_null($path) && $disk->exists('Models')) $path = "Models";
-        return collect($disk->allFiles($path))
-            ->map(function ($filename) use ($disk) {
-                return get_class_from_file($disk->path($filename));
+        $fileSystem = new Filesystem();
+        $path = $fileSystem->exists($modelsPath = $path ?: app_path('Models')) ? $modelsPath : app_path();
+        return collect($fileSystem->allFiles($path))
+            ->map(function ($filename) use ($fileSystem) {
+                return get_class_from_file(app_path("Model\\$filename"));
             })
             ->filter(function ($class) use ($base_model, $with_abstract) {
                 $ref = new ReflectionClass($class);
