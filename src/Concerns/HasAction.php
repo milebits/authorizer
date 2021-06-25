@@ -6,8 +6,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use JetBrains\PhpStorm\Pure;
-use function Milebits\Helpers\Helpers\constVal;
+use function constVal;
 
 /**
  * Trait HasAction
@@ -26,7 +25,7 @@ trait HasAction
     /**
      * @return string
      */
-    #[Pure] public function getActionColumn(): string
+    public function getActionColumn(): string
     {
         return constVal($this, 'ACTION_COLUMN', 'action');
     }
@@ -56,7 +55,7 @@ trait HasAction
      */
     public function decideActionColumnName(Builder $builder): string
     {
-        return count((array)(property_exists($builder, 'joins') ? $builder->joins : [])) > 0
+        return count(property_exists($builder, 'joins') ? $builder->joins : []) > 0
             ? $this->getQualifiedActionColumn()
             : $this->getActionColumn();
     }

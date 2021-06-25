@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use function Milebits\Helpers\Helpers\constVal;
+use function constVal;
 
 /**
  * Trait HasClass
@@ -54,7 +54,7 @@ trait HasClass
      */
     public function decideClassColumnName(Builder $builder): string
     {
-        return count((array)(property_exists($builder, 'joins') ? $builder->joins : [])) > 0
+        return count(property_exists($builder, 'joins') ? $builder->joins : []) > 0
             ? $this->getQualifiedClassColumn()
             : $this->getClassColumn();
     }

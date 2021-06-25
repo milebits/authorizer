@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
 use Milebits\Authorizer\Models\Permission;
-use function Milebits\Authorizer\Helpers\app_models;
+use function app_models;
 
 class InstallPermissions extends Command
 {
