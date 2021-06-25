@@ -2,8 +2,10 @@
 
 namespace Milebits\Authorizer\Concerns;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
 use function Milebits\Helpers\Helpers\constVal;
 
@@ -57,5 +59,22 @@ trait HasAction
         return count((array)(property_exists($builder, 'joins') ? $builder->joins : [])) > 0
             ? $this->getQualifiedActionColumn()
             : $this->getActionColumn();
+    }
+
+    /**
+     * @param Builder $builder
+     * @param string|array|Arrayable $actions
+     * @param string $glue
+     * @return Builder
+     */
+    public function scopeActionIn(Builder $builder, string|array|Arrayable $actions = [], string $glue = "|"): Builder
+    {
+        if (is_string($actions)) {
+            $actions = Str::of($actions);
+            if (($actions = Str::of($actions))->contains($glue)) $actions = $actions->explode($glue);
+            if (!is_array($actions)) $actions = [$actions];
+        }
+        if (is_array($actions)) $actions = collect($actions);
+        return $builder->whereIn($this->decideActionColumnName($builder), $actions);
     }
 }
