@@ -1,12 +1,9 @@
 <?php
 
-namespace Milebits\Authorizer\Helpers;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use ReflectionClass;
 
 if (!function_exists('get_class_from_file')) {
     function get_class_from_file($filepath): string
