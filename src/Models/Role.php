@@ -33,6 +33,6 @@ class Role extends Model
     public function users(): BelongsToMany
     {
         $relation = config('authorizer.pivots.user_class', 'App\Models\User');
-        return $this->belongsToMany(is_null($relation) ? 'App\Models\User' : $relation)->withTimestamps();
+        return $this->belongsToMany($relation ?: 'App\Models\User')->withTimestamps();
     }
 }
