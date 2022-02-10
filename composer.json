@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "php": ">=8.0",
-        "laravel/framework": "^6|^7|^8",
+        "laravel/framework": "^6|^7|^8|^9",
         "milebits/eloquent-filters": ">=3"
     },
     "license": "GPL-3.0-or-later",
